@@ -10,10 +10,7 @@ var clientAppURL = 'http://localhost:8080';
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
-//var redis = require('redis');
-//var client = redis.createClient();
-
+var devices = require('./routes/devices');
 
 var app = express();
 
@@ -41,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/devices', devices);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

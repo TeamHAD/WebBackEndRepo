@@ -52,7 +52,7 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
         status: dev.status
       };
     }).pop();
-
+    // TODO call device api to update
     if (device) {
       res.status(200);
     } else {

@@ -2,33 +2,42 @@
   {
     "id": 0,
     "description": "Front Door",
-    "address": "10.0.0.20",
-    "port": "8000",
+    "address": "10.7.10.210",
+    "port": "80",
+    "channel": 0,
     "status": 0,
-    "type": "lock"
+    "type": "lock",
+    "format": "json"
   },
   {
     "id": 1,
     "description": "Back Window",
-    "address": "10.0.0.30",
-    "port": "8080",
+    "address": "127.0.0.1",
+    "port": "3000",
+    "channel": 1,
     "status": 0,
-    "type": "lock"
+    "type": "lock",
+    "format": "xml"
   },
   {
     "id": 2,
     "description": "Outside Light",
     "address": "10.0.0.3",
     "port": "443",
+    "channel": 3,
     "status": 1,
-    "type": "light"
+    "type": "light",
+    "format": "json"
+
   },
   {
     "id": 3,
     "description": "Inside Light",
     "address": "10.0.0.3",
     "port": "80",
+    "channel": 0,
     "status": 1,
-    "type": "light"
+    "type": "light",
+    "format": "json"
   }
 ]

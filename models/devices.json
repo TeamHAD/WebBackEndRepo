@@ -7,7 +7,7 @@
     "channel": 0,
     "status": 0,
     "type": "lock",
-    "format": "json"
+    "format": "xml"
   },
   {
     "id": 1,

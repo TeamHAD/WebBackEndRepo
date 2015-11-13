@@ -3,7 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 var http = require('http');
-var xmlparser = require('express-xml-bodyparser');
+var request = require("request");
 
 fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) {
   data = JSON.parse(data);
@@ -48,35 +48,30 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
     var device = data.filter(function(dev) {
       return dev.id == req.params.did;
     }).pop();
-    // TODO call device api to update
-
-    var options = {
-      host: device.address,
-      //path: "/digitaloutput/" + device.channel + "/" + req.params.dvalue + "/value",
-      path: "/digitaloutput/all/value",
-      port: device.port
-    };
-    console.log(options);
-    http.get(options, function(http_res) {
-      var http_res_data = '';
-      http_res.on("data", function(chunk) {
-        http_res_data += chunk;
-      });
-      http_res.on("end", function() {
-        //http_res_data =
-
-          console.log(http_res_data);
-      });
-    });
-
     if (device) {
-      res.status(200);
+      var device_key = "DO" + req.params.did;
+      var options = {
+        uri: "http://" + device.address + ":" + device.port + "/digitaloutput/all/value?" + device_key + "=" + req.params.dvalue,
+        method: "POST",
+        timeout: 3000
+      };
+      console.log(options);
+      request.post(options, function(error, dev_res, body) {
+        console.log(body);
+        if (error) {
+          res.status(500);
+        } else if (body.indexOf('status=”OK”') > 0) {
+          res.status(200);
+        } else {
+          res.status(404);
+        }
+        res.end();
+      });
     } else {
       res.status(404);
+      res.end();
     }
-    res.end();
   });
-
 });
 
 module.exports = router;

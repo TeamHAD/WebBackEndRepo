@@ -12,9 +12,7 @@ var _assert = require('./assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
-var _isFunction = require('./isFunction');
-
-var _isFunction2 = _interopRequireDefault(_isFunction);
+var _TestUtils = require('./TestUtils');
 
 function noop() {}
 
@@ -25,7 +23,7 @@ function createSpy(fn) {
 
   if (fn == null) fn = noop;
 
-  _assert2['default'](_isFunction2['default'](fn), 'createSpy needs a function');
+  _assert2['default'](_TestUtils.isFunction(fn), 'createSpy needs a function');
 
   var targetFn = undefined,
       thrownValue = undefined,
@@ -82,7 +80,7 @@ function spyOn(object, methodName) {
   var original = object[methodName];
 
   if (!isSpy(original)) {
-    _assert2['default'](_isFunction2['default'](original), 'Cannot spyOn the %s property; it is not a function', methodName);
+    _assert2['default'](_TestUtils.isFunction(original), 'Cannot spyOn the %s property; it is not a function', methodName);
 
     object[methodName] = createSpy(original, function () {
       object[methodName] = original;

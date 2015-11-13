@@ -18,29 +18,9 @@ var _assert = require('./assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
-var _isFunction = require('./isFunction');
-
-var _isFunction2 = _interopRequireDefault(_isFunction);
-
-var _functionThrows = require('./functionThrows');
-
-var _functionThrows2 = _interopRequireDefault(_functionThrows);
-
-var _stringContains = require('./stringContains');
-
-var _stringContains2 = _interopRequireDefault(_stringContains);
-
-var _arrayContains = require('./arrayContains');
-
-var _arrayContains2 = _interopRequireDefault(_arrayContains);
-
 var _SpyUtils = require('./SpyUtils');
 
-var _isA = require('./isA');
-
-var _isA2 = _interopRequireDefault(_isA);
-
-var isArray = Array.isArray;
+var _TestUtils = require('./TestUtils');
 
 /**
  * An Expectation is a wrapper around an assertion that allows it to be written
@@ -54,7 +34,7 @@ var Expectation = (function () {
 
     this.actual = actual;
 
-    if (_isFunction2['default'](actual)) {
+    if (_TestUtils.isFunction(actual)) {
       this.context = null;
       this.args = [];
     }
@@ -105,33 +85,33 @@ var Expectation = (function () {
   };
 
   Expectation.prototype.toThrow = function toThrow(value, message) {
-    _assert2['default'](_isFunction2['default'](this.actual), 'The "actual" argument in expect(actual).toThrow() must be a function, %s was given', this.actual);
+    _assert2['default'](_TestUtils.isFunction(this.actual), 'The "actual" argument in expect(actual).toThrow() must be a function, %s was given', this.actual);
 
-    _assert2['default'](_functionThrows2['default'](this.actual, this.context, this.args, value), message || 'Expected %s to throw %s', this.actual, value);
+    _assert2['default'](_TestUtils.functionThrows(this.actual, this.context, this.args, value), message || 'Expected %s to throw %s', this.actual, value || 'an error');
 
     return this;
   };
 
   Expectation.prototype.toNotThrow = function toNotThrow(value, message) {
-    _assert2['default'](_isFunction2['default'](this.actual), 'The "actual" argument in expect(actual).toNotThrow() must be a function, %s was given', this.actual);
+    _assert2['default'](_TestUtils.isFunction(this.actual), 'The "actual" argument in expect(actual).toNotThrow() must be a function, %s was given', this.actual);
 
-    _assert2['default'](!_functionThrows2['default'](this.actual, this.context, this.args, value), message || 'Expected %s to not throw %s', this.actual, value);
+    _assert2['default'](!_TestUtils.functionThrows(this.actual, this.context, this.args, value), message || 'Expected %s to not throw %s', this.actual, value || 'an error');
 
     return this;
   };
 
   Expectation.prototype.toBeA = function toBeA(value, message) {
-    _assert2['default'](_isFunction2['default'](value) || typeof value === 'string', 'The "value" argument in toBeA(value) must be a function or a string');
+    _assert2['default'](_TestUtils.isFunction(value) || typeof value === 'string', 'The "value" argument in toBeA(value) must be a function or a string');
 
-    _assert2['default'](_isA2['default'](this.actual, value), message || 'Expected %s to be a %s', this.actual, value);
+    _assert2['default'](_TestUtils.isA(this.actual, value), message || 'Expected %s to be a %s', this.actual, value);
 
     return this;
   };
 
   Expectation.prototype.toNotBeA = function toNotBeA(value, message) {
-    _assert2['default'](_isFunction2['default'](value) || typeof value === 'string', 'The "value" argument in toNotBeA(value) must be a function or a string');
+    _assert2['default'](_TestUtils.isFunction(value) || typeof value === 'string', 'The "value" argument in toNotBeA(value) must be a function or a string');
 
-    _assert2['default'](!_isA2['default'](this.actual, value), message || 'Expected %s to be a %s', this.actual, value);
+    _assert2['default'](!_TestUtils.isA(this.actual, value), message || 'Expected %s to be a %s', this.actual, value);
 
     return this;
   };
@@ -177,7 +157,7 @@ var Expectation = (function () {
   };
 
   Expectation.prototype.toInclude = function toInclude(value, comparator, message) {
-    _assert2['default'](isArray(this.actual) || typeof this.actual === 'string', 'The "actual" argument in expect(actual).toInclude() must be an array or a string');
+    _assert2['default'](_TestUtils.isArray(this.actual) || typeof this.actual === 'string', 'The "actual" argument in expect(actual).toInclude() must be an array or a string');
 
     if (typeof comparator === 'string') {
       message = comparator;
@@ -186,17 +166,17 @@ var Expectation = (function () {
 
     message = message || 'Expected %s to include %s';
 
-    if (isArray(this.actual)) {
-      _assert2['default'](_arrayContains2['default'](this.actual, value, comparator), message, this.actual, value);
+    if (_TestUtils.isArray(this.actual)) {
+      _assert2['default'](_TestUtils.arrayContains(this.actual, value, comparator), message, this.actual, value);
     } else {
-      _assert2['default'](_stringContains2['default'](this.actual, value), message, this.actual, value);
+      _assert2['default'](_TestUtils.stringContains(this.actual, value), message, this.actual, value);
     }
 
     return this;
   };
 
   Expectation.prototype.toExclude = function toExclude(value, comparator, message) {
-    _assert2['default'](isArray(this.actual) || typeof this.actual === 'string', 'The "actual" argument in expect(actual).toExclude() must be an array or a string');
+    _assert2['default'](_TestUtils.isArray(this.actual) || typeof this.actual === 'string', 'The "actual" argument in expect(actual).toExclude() must be an array or a string');
 
     if (typeof comparator === 'string') {
       message = comparator;
@@ -205,10 +185,10 @@ var Expectation = (function () {
 
     message = message || 'Expected %s to exclude %s';
 
-    if (isArray(this.actual)) {
-      _assert2['default'](!_arrayContains2['default'](this.actual, value, comparator), message, this.actual, value);
+    if (_TestUtils.isArray(this.actual)) {
+      _assert2['default'](!_TestUtils.arrayContains(this.actual, value, comparator), message, this.actual, value);
     } else {
-      _assert2['default'](!_stringContains2['default'](this.actual, value), message, this.actual, value);
+      _assert2['default'](!_TestUtils.stringContains(this.actual, value), message, this.actual, value);
     }
 
     return this;
@@ -249,7 +229,7 @@ var Expectation = (function () {
   };
 
   Expectation.prototype.withContext = function withContext(context) {
-    _assert2['default'](_isFunction2['default'](this.actual), 'The "actual" argument in expect(actual).withContext() must be a function');
+    _assert2['default'](_TestUtils.isFunction(this.actual), 'The "actual" argument in expect(actual).withContext() must be a function');
 
     this.context = context;
 
@@ -257,7 +237,7 @@ var Expectation = (function () {
   };
 
   Expectation.prototype.withArgs = function withArgs() {
-    _assert2['default'](_isFunction2['default'](this.actual), 'The "actual" argument in expect(actual).withArgs() must be a function');
+    _assert2['default'](_TestUtils.isFunction(this.actual), 'The "actual" argument in expect(actual).withArgs() must be a function');
 
     if (arguments.length) this.args = this.args.concat(Array.prototype.slice.call(arguments, 0));
 

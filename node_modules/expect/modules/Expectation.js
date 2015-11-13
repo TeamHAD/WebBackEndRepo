@@ -1,14 +1,8 @@
 import deepEqual from 'deep-equal'
 import isRegExp from 'is-regexp'
 import assert from './assert'
-import isFunction from './isFunction'
-import functionThrows from './functionThrows'
-import stringContains from './stringContains'
-import arrayContains from './arrayContains'
 import { isSpy } from './SpyUtils'
-import isA from './isA'
-
-const isArray = Array.isArray
+import { functionThrows, arrayContains, stringContains, isArray, isFunction, isA } from './TestUtils'
 
 /**
  * An Expectation is a wrapper around an assertion that allows it to be written
@@ -109,7 +103,7 @@ class Expectation {
       functionThrows(this.actual, this.context, this.args, value),
       (message || 'Expected %s to throw %s'),
       this.actual,
-      value
+      value || 'an error'
     )
 
     return this
@@ -126,7 +120,7 @@ class Expectation {
       !functionThrows(this.actual, this.context, this.args, value),
       (message || 'Expected %s to not throw %s'),
       this.actual,
-      value
+      value || 'an error'
     )
 
     return this

@@ -45,6 +45,7 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
 
 
   router.post('/:did/:dvalue', function(req, res, next) {
+    console.log(data);
     var device = data.filter(function(dev) {
       return dev.id == req.params.did;
     }).pop();
@@ -57,10 +58,11 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
       };
       console.log(options);
       request.post(options, function(error, dev_res, body) {
-        console.log(body);
         if (error) {
           res.status(500);
         } else if (body.indexOf('status=”OK”') > 0) {
+          // update internal data structure
+          data[req.params.did]['status'] = req.params.dvalue;
           res.status(200);
         } else {
           res.status(404);

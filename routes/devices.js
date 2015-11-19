@@ -3,7 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 var http = require('http');
-var request = require("request");
+var rest = require('restler');
 
 fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) {
   data = JSON.parse(data);
@@ -49,16 +49,20 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
     var device = data.filter(function(dev) {
       return dev.id == req.params.did;
     }).pop();
+	console.log(device);
     if (device) {
       var device_key = "DO" + req.params.did;
-      var options = {
-        uri: "http://" + device.address + ":" + device.port + "/digitaloutput/all/value?" + device_key + "=" + req.params.dvalue,
-        method: "POST",
-        timeout: 3000
-      };
-      console.log(options);
-      request.post(options, function(error, dev_res, body) {
-        if (error) {
+      console.log(device_key + ": " + req.params.dvalue);
+      console.log("http://root:00000000@" + device.address + ":" + device.port + "/digitaloutput/all/value");
+	  
+	  var dev_params = {data: {}};
+	  dev_params['data'][device_key] = req.params.dvalue;
+	  console.log(dev_params);
+      rest.post("http://root:00000000@" + device.address + ":" + device.port + "/digitaloutput/all/value", dev_params).on("complete", function(body, dev_res) {
+		  console.log("BODY " + body);
+		  //console.log("ERROR " + error);
+		  //console.log("RESPONSE " + dev_res.statusCode);
+        if (false) {
           res.status(500);
         } else if (body.indexOf('status=”OK”') > 0) {
           // update internal data structure
@@ -75,5 +79,6 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
     }
   });
 });
+
 
 module.exports = router;

@@ -1,6 +1,6 @@
 [
   {
-    "id": 0,
+    "did": 0,
     "description": "Front Door",
     "address": "10.7.10.201",
     "port": "80",
@@ -10,7 +10,7 @@
     "format": "xml"
   },
   {
-    "id": 1,
+    "did": 1,
     "description": "Back Window",
     "address": "10.7.10.201",
     "port": "80",
@@ -20,7 +20,7 @@
     "format": "xml"
   },
   {
-    "id": 2,
+    "did": 2,
     "description": "Outside Light",
     "address": "10.7.10.201",
     "port": "80",
@@ -31,7 +31,7 @@
 
   },
   {
-    "id": 3,
+    "did": 3,
     "description": "Inside Light",
 	"address": "10.7.10.201",
     "port": "80",
@@ -41,7 +41,7 @@
     "format": "json"
   },
   {
-    "id": 4,
+    "did": 4,
     "description": "Inside Light",
 	"address": "10.7.10.201",
     "port": "80",
@@ -51,7 +51,7 @@
     "format": "json"
   },
   {
-    "id": 5,
+    "did": 5,
     "description": "Inside Light",
 	"address": "10.7.10.201",
     "port": "80",
@@ -60,5 +60,5 @@
     "type": "light",
     "format": "json"
   }
-  
+
 ]

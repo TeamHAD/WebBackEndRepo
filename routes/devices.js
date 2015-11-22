@@ -6,43 +6,33 @@ var http = require('http');
 var rest = require('restler');
 
 fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) {
-  data = JSON.parse(data);
 
   router.get('/', function(req, res, next) {
-    var devs = data.map(function(dev) {
-      return {
-        id: dev.id,
-        description: dev.description
-      };
-    });
+    var collection = req.db.get('devices');
+    collection.find({}, {fields: {_id: false, id: true, description: true}}, function(err, recs) {
+      res.status(200);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(recs);
 
-    res.status(200);
-    res.setHeader('Content-Type', 'application/json');
-    res.send(devs);
+    });
   });
 
 
   router.get('/:did', function(req, res, next) {
-    var device = data.filter(function(dev) {
-      return dev.id == req.params.did;
-    }).map(function(dev) {
-      return {
-        description: dev.description,
-        type: dev.type,
-        status: dev.status
-      };
-    }).pop();
-
-    if (device) {
-      res.status(200);
-      res.setHeader('Content-Type', 'application/json');
-      res.send(device);
-    } else {
-      res.status(404);
-      res.end();
-    }
+    var collection = req.db.get('devices');
+    console.log(req.params.did);
+    collection.find({}, {fields: {_id: false, did: true, description: true, status: true}}, function(err, rec) {
+      console.log(rec);
+      if (rec) {
+        res.status(200);
+        res.setHeader('Content-Type', 'application/json');
+        res.send(rec);
+      } else {
+        res.status(404);
+        res.end();
+      }
+    });
   });
-
 
   router.post('/:did/:dvalue', function(req, res, next) {
     console.log(data);
@@ -54,7 +44,7 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
       var device_key = "DO" + req.params.did;
       console.log(device_key + ": " + req.params.dvalue);
       console.log("http://root:00000000@" + device.address + ":" + device.port + "/digitaloutput/all/value");
-	  
+
 	  var dev_params = {data: {}};
 	  dev_params['data'][device_key] = req.params.dvalue;
 	  console.log(dev_params);

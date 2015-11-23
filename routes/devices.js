@@ -49,22 +49,23 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
     var device = data.filter(function(dev) {
       return dev.id == req.params.did;
     }).pop();
-	console.log(device);
-    if (device) {
+	   console.log(device);
+     if (device) {
       var device_key = "DO" + req.params.did;
       console.log(device_key + ": " + req.params.dvalue);
       console.log("http://root:00000000@" + device.address + ":" + device.port + "/digitaloutput/all/value");
-	  
+
 	  var dev_params = {data: {}};
 	  dev_params['data'][device_key] = req.params.dvalue;
 	  console.log(dev_params);
-      rest.post("http://root:00000000@" + device.address + ":" + device.port + "/digitaloutput/all/value", dev_params).on("complete", function(body, dev_res) {
-		  console.log("BODY " + body);
-		  //console.log("ERROR " + error);
-		  //console.log("RESPONSE " + dev_res.statusCode);
-        if (false) {
-          res.status(500);
-        } else if (body.indexOf('status=”OK”') > 0) {
+    rest.post("http://root:00000000@" + device.address + ":" + device.port + "/digitaloutput/all/value", dev_params)
+      .on("error", function(err) {
+        res.status(500);
+        res.end();
+      })
+      .on("success", function(body, dev_res) {
+    	  console.log("BODY " + body);
+    	  if (body.indexOf('status=”OK”') > 0) {
           // update internal data structure
           data[req.params.did]['status'] = req.params.dvalue;
           res.status(200);
@@ -73,9 +74,7 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
         }
         res.end();
       });
-    } else {
-      res.status(404);
-      res.end();
+
     }
   });
 });

@@ -64,11 +64,12 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
         })
         .on("success", function(body, dev_res) {
       	  console.log("BODY " + body);
-      	  if (body.indexOf('status=”OK”') > 0) {
+      	  if (body.indexOf('status="OK"') > 0) {
             // update internal data structure
-            data[req.params.did]['status'] = req.params.dvalue;
-            res.status(200);
+            data[req.params.did]['status'] = parseInt(req.params.dvalue);
+            res.status(204);
           } else {
+            res.write(JSON.stringify(body));
             res.status(404);
           }
           res.end();

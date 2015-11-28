@@ -1,12 +1,12 @@
 [
   {
     "id": 0,
-    "description": "Front Door",
+    "description": "Shut the Front Door",
     "address": "10.7.10.201",
     "port": "80",
     "channel": 0,
     "status": 0,
-    "type": "lock",
+    "type": "light",
     "format": "xml"
   },
   {
@@ -16,14 +16,14 @@
     "port": "80",
     "channel": 1,
     "status": 0,
-    "type": "lock",
+    "type": "light",
     "format": "xml"
   },
   {
     "id": 2,
     "description": "Outside Light",
-    "address": "10.7.10.201",
-    "port": "80",
+    "address": "127.0.0.1",
+    "port": "3000",
     "channel": 2,
     "status": 1,
     "type": "light",
@@ -33,9 +33,9 @@
   {
     "id": 3,
     "description": "Inside Light",
-	"address": "10.7.10.201",
-    "port": "80",
-	"channel": 3,
+    "address": "127.0.0.1",
+    "port": "3000",
+    "channel": 3,
     "status": 1,
     "type": "light",
     "format": "json"
@@ -43,9 +43,9 @@
   {
     "id": 4,
     "description": "Inside Light",
-	"address": "10.7.10.201",
+    "address": "10.7.10.201",
     "port": "80",
-	"channel": 4,
+    "channel": 4,
     "status": 1,
     "type": "light",
     "format": "json"
@@ -53,12 +53,74 @@
   {
     "id": 5,
     "description": "Inside Light",
-	"address": "10.7.10.201",
+    "address": "10.7.10.201",
     "port": "80",
-	"channel": 5,
+    "channel": 5,
     "status": 1,
     "type": "light",
     "format": "json"
+  },
+
+  {
+    "id": 6,
+    "description": "Shut the Front Door",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 0,
+    "status": 0,
+    "type": "lock",
+    "format": "xml"
+  },
+  {
+    "id": 7,
+    "description": "Back Window",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 1,
+    "status": 0,
+    "type": "lock",
+    "format": "xml"
+  },
+  {
+    "id": 8,
+    "description": "Outside Light",
+    "address": "127.0.0.1",
+    "port": "3000",
+    "channel": 2,
+    "status": 1,
+    "type": "lock",
+    "format": "json"
+
+  },
+  {
+    "id": 9,
+    "description": "Inside Light",
+    "address": "127.0.0.1",
+    "port": "3000",
+    "channel": 3,
+    "status": 1,
+    "type": "lock",
+    "format": "json"
+  },
+  {
+    "id": 10,
+    "description": "Inside Light",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 4,
+    "status": 1,
+    "type": "lock",
+    "format": "json"
+  },
+  {
+    "id": 11,
+    "description": "Inside Light",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 5,
+    "status": 1,
+    "type": "lock",
+    "format": "json"
   }
-  
+
 ]

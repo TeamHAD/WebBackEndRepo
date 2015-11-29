@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>devices.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>devices.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">var</span> router = express.Router();
+<span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">var</span> rest = <span class="hljs-built_in">require</span>(<span class="hljs-string">'restler'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Basic HTTP Auth credtentials necessary to communicate with ADAM devices</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> ADAM_USER = <span class="hljs-string">'root'</span>;
+<span class="hljs-keyword">var</span> ADAM_PASSWD = <span class="hljs-string">'00000000'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Get device meta data from json file
+TODO read from db</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>fs.readFile(path.join(__dirname, <span class="hljs-string">'../models/devices.json'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, data</span>) </span>{
+  data = <span class="hljs-built_in">JSON</span>.parse(data);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>GET /devices/
+Returns JSON array of devices and their info</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  router.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+    <span class="hljs-keyword">var</span> devs = data.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dev</span>) </span>{
+      <span class="hljs-keyword">return</span> {
+        id: dev.id,
+        description: dev.description
+      };
+    });
+
+    res.status(<span class="hljs-number">200</span>);
+    res.setHeader(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'application/json'</span>);
+    res.send(devs);
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>GET /devices/:id
+Returns info for a specific device
+Returns 404 if there is no device with given :id
+Returns 500 if there is an error returned from device</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  router.get(<span class="hljs-string">'/:did'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+    <span class="hljs-keyword">var</span> device_id = req.params.did;
+    <span class="hljs-keyword">var</span> device = data.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dev</span>) </span>{
+      <span class="hljs-keyword">return</span> dev.id == device_id;
+    }).pop();
+    <span class="hljs-keyword">if</span> (device) {
+      <span class="hljs-keyword">var</span> api_mothod;
+      <span class="hljs-keyword">if</span> (device.type == <span class="hljs-string">"light"</span>) {
+        api_method = <span class="hljs-string">'digitaloutput'</span>;
+      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (device.type == <span class="hljs-string">"lock"</span>) {
+        api_method = <span class="hljs-string">'digitalinput'</span>;
+      }      
+      rest.get(<span class="hljs-string">"http://"</span> + ADAM_USER + <span class="hljs-string">":"</span> + ADAM_PASSWD + <span class="hljs-string">"@"</span> + device.address + <span class="hljs-string">":"</span> + device.port + <span class="hljs-string">"/"</span> + api_method + <span class="hljs-string">"/"</span> + device.channel + <span class="hljs-string">"/value"</span>)
+        .on(<span class="hljs-string">"error"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+          res.status(<span class="hljs-number">500</span>);
+        })
+        .on(<span class="hljs-string">"success"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">body, dev_res</span>) </span>{
+      	  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"BODY "</span> + body);
+      	  <span class="hljs-keyword">if</span> (body.indexOf(<span class="hljs-string">'status="OK"'</span>) &gt; <span class="hljs-number">0</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>update internal data structure
+[device_id][‘status’] = parseInt(req.params.dvalue);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            res.status(<span class="hljs-number">200</span>);
+            res.send({
+              id: device.id,
+              description: device.description,
+              status: device.status
+            });
+          } <span class="hljs-keyword">else</span> {
+            res.status(<span class="hljs-number">404</span>);
+          }
+        });
+
+    } <span class="hljs-keyword">else</span> {
+      res.status(<span class="hljs-number">404</span>);
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>POST /devices/:id/:value
+Updates device with given id to have a status of :value
+Returns 204 if the device was updated
+Returns 404 if there is no device with given :id
+Returns 500 if there is an error returned from device</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  router.post(<span class="hljs-string">'/:did/:dvalue'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(data);
+    <span class="hljs-keyword">var</span> device = data.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dev</span>) </span>{
+      <span class="hljs-keyword">return</span> dev.id == req.params.did;
+    }).pop();
+	   <span class="hljs-built_in">console</span>.log(device);
+     <span class="hljs-keyword">if</span> (device) {
+      <span class="hljs-keyword">var</span> device_key = <span class="hljs-string">"DO"</span> + req.params.did;
+      <span class="hljs-built_in">console</span>.log(device_key + <span class="hljs-string">": "</span> + req.params.dvalue);
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"http://root:00000000@"</span> + device.address + <span class="hljs-string">":"</span> + device.port + <span class="hljs-string">"/digitaloutput/all/value"</span>);
+
+  	  <span class="hljs-keyword">var</span> dev_params = {data: {}};
+  	  dev_params[<span class="hljs-string">'data'</span>][device_key] = req.params.dvalue;
+  	  <span class="hljs-built_in">console</span>.log(dev_params);
+      rest.post(<span class="hljs-string">"http://root:00000000@"</span> + device.address + <span class="hljs-string">":"</span> + device.port + <span class="hljs-string">"/digitaloutput/all/value"</span>, dev_params)
+        .on(<span class="hljs-string">"error"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+          res.status(<span class="hljs-number">500</span>);
+          res.end();
+        })
+        .on(<span class="hljs-string">"success"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">body, dev_res</span>) </span>{
+      	  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"BODY "</span> + body);
+      	  <span class="hljs-keyword">if</span> (body.indexOf(<span class="hljs-string">'status="OK"'</span>) &gt; <span class="hljs-number">0</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>update internal data structure</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            data[req.params.did][<span class="hljs-string">'status'</span>] = <span class="hljs-built_in">parseInt</span>(req.params.dvalue);
+            res.status(<span class="hljs-number">204</span>);
+
+
+          } <span class="hljs-keyword">else</span> {
+            res.write(<span class="hljs-built_in">JSON</span>.stringify(body));
+            res.status(<span class="hljs-number">404</span>);
+          }
+          res.end();
+        });
+
+    } <span class="hljs-keyword">else</span> {
+      res.status(<span class="hljs-number">404</span>);
+    }
+  });
+});
+
+
+<span class="hljs-built_in">module</span>.exports = router;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

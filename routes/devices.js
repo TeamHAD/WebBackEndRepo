@@ -4,11 +4,18 @@ var fs = require('fs');
 var path = require('path');
 var rest = require('restler');
 
+// Basic HTTP Auth credtentials necessary to communicate with ADAM devices
+var ADAM_USER = 'root';
+var ADAM_PASSWD = '00000000';
+
+// Get device meta data from json file
+// TODO read from db
 fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) {
   data = JSON.parse(data);
 
+  // GET /devices/
+  // Returns JSON array of devices and their info
   router.get('/', function(req, res, next) {
-    console.log(data);
     var devs = data.map(function(dev) {
       return {
         id: dev.id,
@@ -21,22 +28,23 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
     res.send(devs);
   });
 
-
+  // GET /devices/:id
+  // Returns info for a specific device
+  // Returns 404 if there is no device with given :id
+  // Returns 500 if there is an error returned from device
   router.get('/:did', function(req, res, next) {
     var device_id = req.params.did;
     var device = data.filter(function(dev) {
       return dev.id == device_id;
     }).pop();
-console.log(device);
     if (device) {
       var api_mothod;
       if (device.type == "light") {
         api_method = 'digitaloutput';
       } else if (device.type == "lock") {
         api_method = 'digitalinput';
-      }
-      console.log("http://root:00000000@" + device.address + ":" + device.port + "/" + api_method + "/" + device.channel + "/value");
-      rest.get("http://root:00000000@" + device.address + ":" + device.port + "/" + api_method + "/" + device.channel + "/value")
+      }      
+      rest.get("http://" + ADAM_USER + ":" + ADAM_PASSWD + "@" + device.address + ":" + device.port + "/" + api_method + "/" + device.channel + "/value")
         .on("error", function(err) {
           res.status(500);
         })
@@ -62,6 +70,11 @@ console.log(device);
   });
 
 
+  // POST /devices/:id/:value
+  // Updates device with given id to have a status of :value
+  // Returns 204 if the device was updated
+  // Returns 404 if there is no device with given :id
+  // Returns 500 if there is an error returned from device
   router.post('/:did/:dvalue', function(req, res, next) {
     console.log(data);
     var device = data.filter(function(dev) {

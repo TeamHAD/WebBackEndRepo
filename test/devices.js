@@ -33,9 +33,41 @@ describe('web back end', function() {
       done();
   });
 
+
   it('you get a 404 for unknown device', function(done) {
     request(server)
       .get('/devices/1337')
-      .expect(404, done);
+      .expect(404);
+      done();
   });
+
+  it('returns info about a specific device', function(done) {
+    request(server)
+      .get('/devices/0')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        var dev = body.res.pop();
+        dev.should.have.property('id');
+        dev.should.have.property('description');
+        dev.should.have.property('status');
+      });
+      done();
+  });
+
+  it('updates a specific device', function(done) {
+    request(server)
+      .post('/devices/2/1')
+      .expect(204);
+
+    request(server)
+      .get('/devices/2')
+      .expect(200)
+      .end(function(err, res) {
+        var dev = body.res.pop();
+        dev.should.have.property('status').with.value(1);
+      });
+    done();
+  });
+
 });

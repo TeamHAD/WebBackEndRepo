@@ -32,6 +32,11 @@ Edit /models/devices.json to configure hardware devices. An example JSON object 
     }
 
 
-TODO
+Testing
+-------
 
-Add configuration instructions for Monogodb.
+From inside the app directory run the command
+
+    mocha
+
+    

@@ -26,9 +26,11 @@ describe('web back end', function() {
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
+        should.not.exist(err);
         var collection = body.res.pop();
         collection.should.be.type('array');
         collection.should.have.property('description');
+        collection.should.have.property('type');
       });
       done();
   });

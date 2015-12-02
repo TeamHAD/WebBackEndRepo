@@ -19,7 +19,8 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
     var devs = data.map(function(dev) {
       return {
         id: dev.id,
-        description: dev.description
+        description: dev.description,
+        type: dev.type
       };
     });
 

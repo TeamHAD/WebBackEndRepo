@@ -121,6 +121,17 @@
     "status": 1,
     "type": "lock",
     "format": "json"
+  },
+  {
+    "id": 12,
+    "description": "Temperature Sensor",
+    "address": "10.7.10.202",
+    "port": "80",
+    "channel": 4,
+    "status": 1,
+    "type": "sensor",
+    "format": "json"
   }
+  
 
 ]

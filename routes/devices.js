@@ -53,17 +53,33 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
         })
         .on("success", function(body, dev_res) {
       	  console.log("BODY " + body);
-      	  if (body.indexOf('status="OK"') > 0) {
-            // update internal data structure
-            //[device_id]['status'] = parseInt(req.params.dvalue);
-            res.status(200);
-            res.send({
-              id: device.id,
-              description: device.description,
-              status: device.status
-            });
+          if (body.indexOf('6017')) {
+            if (body.indexOf('VALUE') > 0) {
+              var rvalue = body.match(/(<VALUE>(.+)<\/VALUE>)/g);
+              var hvalue = rvalue[0].replace("<VALUE>", "");
+              var hvalue = hvalue.replace("</VALUE>", "");
+              var dvsor = parseInt('ffff', 16);
+              hvalue = parseInt(hvalue, 16) / dvsor;;
+              res.status(200);
+              res.send({
+                id: device.id,
+                description: device.description,
+                status: hvalue
+              });
+            }
           } else {
-            res.status(404);
+        	  if (body.indexOf('status="OK"') > 0) {
+              // update internal data structure
+              //[device_id]['status'] = parseInt(req.params.dvalue);
+              res.status(200);
+              res.send({
+                id: device.id,
+                description: device.description,
+                status: device.status
+              });
+            } else {
+              res.status(404);
+            }
           }
         });
 

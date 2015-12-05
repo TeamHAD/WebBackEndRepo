@@ -49,8 +49,9 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
       } else {
 		  api_method = 'digitaloutput';
 	  }
-		  
-	  
+
+    console.log("http://" + ADAM_USER + ":" + ADAM_PASSWD + "@" + device.address + ":" + device.port + "/" + api_method + "/" + device.channel + "/value");
+
       rest.get("http://" + ADAM_USER + ":" + ADAM_PASSWD + "@" + device.address + ":" + device.port + "/" + api_method + "/" + device.channel + "/value")
         .on("error", function(err) {
           res.status(500);
@@ -61,7 +62,7 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
             if (body.indexOf('VALUE') > 0) {
               var rvalue = body.match(/(<VALUE>(.+)<\/VALUE>)/g);
               var hvalue = rvalue[0].replace("<VALUE>", "");
-              var hvalue = hvalue.replace("</VALUE>", "");
+              hvalue = hvalue.replace("</VALUE>", "");
               var dvsor = parseInt('ffff', 16);
               hvalue = parseInt(hvalue, 16) / dvsor;;
               res.status(200);
@@ -73,13 +74,17 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
             }
           } else {
         	  if (body.indexOf('status="OK"') > 0) {
+              rvalue = body.match(/(<VALUE>(.+)<\/VALUE>)/g);
+              var ivalue = rvalue[0].replace("<VALUE>", "");
+              ivalue = ivalue.replace("</VALUE>", "");
+
               // update internal data structure
-              //[device_id]['status'] = parseInt(req.params.dvalue);
+              [device_id]['status'] = ivalue;
               res.status(200);
               res.send({
                 id: device.id,
                 description: device.description,
-                status: device.status
+                status: ivalue
               });
             } else {
               res.status(404);

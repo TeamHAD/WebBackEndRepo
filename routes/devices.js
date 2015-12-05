@@ -53,7 +53,7 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
         })
         .on("success", function(body, dev_res) {
       	  console.log("BODY " + body);
-          if (body.indexOf('6017')) {
+          if (body.indexOf('6017') > 0) {
             if (body.indexOf('VALUE') > 0) {
               var rvalue = body.match(/(<VALUE>(.+)<\/VALUE>)/g);
               var hvalue = rvalue[0].replace("<VALUE>", "");

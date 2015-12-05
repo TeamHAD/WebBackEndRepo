@@ -22,8 +22,8 @@
   {
     "id": 2,
     "description": "Outside Light",
-    "address": "127.0.0.1",
-    "port": "3000",
+    "address": "10.7.10.201",
+    "port": "80",
     "channel": 2,
     "status": 1,
     "type": "light",
@@ -33,8 +33,8 @@
   {
     "id": 3,
     "description": "Inside Light",
-    "address": "127.0.0.1",
-    "port": "3000",
+    "address": "10.7.10.201",
+    "port": "80",
     "channel": 3,
     "status": 1,
     "type": "light",
@@ -84,8 +84,8 @@
   {
     "id": 8,
     "description": "Outside Light",
-    "address": "127.0.0.1",
-    "port": "3000",
+    "address": "10.7.10.201",
+    "port": "80",
     "channel": 2,
     "status": 1,
     "type": "lock",
@@ -95,8 +95,8 @@
   {
     "id": 9,
     "description": "Inside Light",
-    "address": "127.0.0.1",
-    "port": "3000",
+    "address": "10.7.10.201",
+    "port": "80",
     "channel": 3,
     "status": 1,
     "type": "lock",
@@ -132,6 +132,6 @@
     "type": "sensor",
     "format": "json"
   }
-  
+
 
 ]

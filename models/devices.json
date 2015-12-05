@@ -7,7 +7,8 @@
     "channel": 0,
     "status": 0,
     "type": "light",
-    "format": "xml"
+    "format": "xml",
+    "icon": "light"
   },
   {
     "id": 1,
@@ -17,7 +18,8 @@
     "channel": 1,
     "status": 0,
     "type": "light",
-    "format": "xml"
+    "format": "xml",
+    "icon": "light"
   },
   {
     "id": 2,
@@ -27,8 +29,8 @@
     "channel": 2,
     "status": 1,
     "type": "light",
-    "format": "json"
-
+    "format": "json",
+    "icon": "light"
   },
   {
     "id": 3,
@@ -38,7 +40,8 @@
     "channel": 3,
     "status": 1,
     "type": "light",
-    "format": "json"
+    "format": "json",
+    "icon": "light"
   },
   {
     "id": 4,
@@ -48,7 +51,8 @@
     "channel": 4,
     "status": 1,
     "type": "light",
-    "format": "json"
+    "format": "json",
+    "icon": "light"
   },
   {
     "id": 5,
@@ -58,7 +62,8 @@
     "channel": 5,
     "status": 1,
     "type": "light",
-    "format": "json"
+    "format": "json",
+    "icon": "light"
   },
 
   {
@@ -69,7 +74,8 @@
     "channel": 0,
     "status": 0,
     "type": "lock",
-    "format": "xml"
+    "format": "xml",
+    "icon": "door"
   },
   {
     "id": 7,
@@ -79,7 +85,8 @@
     "channel": 1,
     "status": 0,
     "type": "lock",
-    "format": "xml"
+    "format": "xml",
+    "icon": "door"
   },
   {
     "id": 8,
@@ -89,8 +96,8 @@
     "channel": 2,
     "status": 1,
     "type": "lock",
-    "format": "json"
-
+    "format": "json",
+    "icon": "door"
   },
   {
     "id": 9,
@@ -100,7 +107,8 @@
     "channel": 3,
     "status": 1,
     "type": "lock",
-    "format": "json"
+    "format": "json",
+    "icon": "window"
   },
   {
     "id": 10,
@@ -110,7 +118,8 @@
     "channel": 4,
     "status": 1,
     "type": "lock",
-    "format": "json"
+    "format": "json",
+    "icon": "window"
   },
   {
     "id": 11,
@@ -120,7 +129,8 @@
     "channel": 5,
     "status": 1,
     "type": "lock",
-    "format": "json"
+    "format": "json",
+    "icon": "window"
   },
   {
     "id": 12,
@@ -130,7 +140,8 @@
     "channel": 4,
     "status": 1,
     "type": "sensor",
-    "format": "json"
+    "format": "json",
+    "icon": "temperature"
   }
 
 

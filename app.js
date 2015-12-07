@@ -1,24 +1,22 @@
+var clientAppURL = 'http://localhost:8080';
+
 var express = require('express');
+var app = express();
 var cors = require('cors');
+var corsOptions = {
+  origin: clientAppURL
+};
+app.use(cors(corsOptions));
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var clientAppURL = 'http://localhost:8080';
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var devices = require('./routes/devices');
-
-var app = express();
-
-var corsOptions = {
-  origin: clientAppURL
-};
-
-app.use(cors(corsOptions));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

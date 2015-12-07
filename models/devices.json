@@ -8,7 +8,7 @@
     "status": 0,
     "type": "light",
     "format": "xml",
-    "icon": "light"
+    "tagType": "light"
   },
   {
     "id": 1,
@@ -19,7 +19,7 @@
     "status": 0,
     "type": "light",
     "format": "xml",
-    "icon": "light"
+    "tagType": "light"
   },
   {
     "id": 2,
@@ -30,7 +30,7 @@
     "status": 1,
     "type": "light",
     "format": "json",
-    "icon": "light"
+    "tagType": "light"
   },
   {
     "id": 3,
@@ -41,7 +41,7 @@
     "status": 1,
     "type": "light",
     "format": "json",
-    "icon": "light"
+    "tagType": "light"
   },
   {
     "id": 4,
@@ -52,7 +52,7 @@
     "status": 1,
     "type": "light",
     "format": "json",
-    "icon": "light"
+    "tagType": "light"
   },
   {
     "id": 5,
@@ -63,7 +63,7 @@
     "status": 1,
     "type": "light",
     "format": "json",
-    "icon": "light"
+    "tagType": "light"
   },
 
   {
@@ -75,7 +75,7 @@
     "status": 0,
     "type": "lock",
     "format": "xml",
-    "icon": "door"
+    "tagType": "door"
   },
   {
     "id": 7,
@@ -86,7 +86,7 @@
     "status": 0,
     "type": "lock",
     "format": "xml",
-    "icon": "door"
+    "tagType": "door"
   },
   {
     "id": 8,
@@ -97,7 +97,7 @@
     "status": 1,
     "type": "lock",
     "format": "json",
-    "icon": "door"
+    "tagType": "door"
   },
   {
     "id": 9,
@@ -108,7 +108,7 @@
     "status": 1,
     "type": "lock",
     "format": "json",
-    "icon": "window"
+    "tagType": "window"
   },
   {
     "id": 10,
@@ -119,7 +119,7 @@
     "status": 1,
     "type": "lock",
     "format": "json",
-    "icon": "window"
+    "tagType": "window"
   },
   {
     "id": 11,
@@ -130,7 +130,7 @@
     "status": 1,
     "type": "lock",
     "format": "json",
-    "icon": "window"
+    "tagType": "window"
   },
   {
     "id": 12,
@@ -141,7 +141,7 @@
     "status": 1,
     "type": "sensor",
     "format": "json",
-    "icon": "temperature"
+    "tagType": "temperature"
   }
 
 

@@ -10,7 +10,7 @@ var ADAM_PASSWD = '00000000';
 
 // Get device meta data from json file
 // TODO read from db
-fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) {
+fs.readFile(path.join(__dirname, '../models/devices_loc.json'), function(err, data) {
   data = JSON.parse(data);
 
   // GET /devices/
@@ -58,19 +58,20 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
         })
         .on("success", function(body, dev_res) {
       	  console.log("BODY " + body);
-          if (body.indexOf('6017') > 0) {
-            if (body.indexOf('VALUE') > 0) {
-              var rvalue = body.match(/(<VALUE>(.+)<\/VALUE>)/g);
-              var hvalue = rvalue[0].replace("<VALUE>", "");
-              hvalue = hvalue.replace("</VALUE>", "");
+          if (body.indexOf('6017') > 0) {            
+            var rvalue = body.match(/(<VALUE>(.+)<\/VALUE>)/);
+            if (typeof rvalue[1] !== 'undefined') {
               var dvsor = parseInt('ffff', 16);
-              hvalue = parseInt(hvalue, 16) / dvsor;;
+              rvalue = parseInt(rvalue, 16) / dvsor;;
               res.status(200);
               res.send({
                 id: device.id,
                 description: device.description,
                 status: hvalue
               });
+            } else {
+              res.status(500);
+              res.end();
             }
           } else {
         	  if (body.indexOf('status="OK"') > 0) {
@@ -115,6 +116,7 @@ fs.readFile(path.join(__dirname, '../models/devices.json'), function(err, data) 
       console.log("http://root:00000000@" + device.address + ":" + device.port + "/digitaloutput/all/value");
 
   	  var dev_params = {data: {}};
+      dev_params['data'] = data;
   	  dev_params['data'][device_key] = req.params.dvalue;
   	  console.log(dev_params);
       rest.post("http://root:00000000@" + device.address + ":" + device.port + "/digitaloutput/all/value", dev_params)

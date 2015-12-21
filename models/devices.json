@@ -1,0 +1,148 @@
+[
+  {
+    "id": 0,
+    "description": "Outside security light",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 0,
+    "status": 0,
+    "type": "light",
+    "format": "xml",
+    "tagType": "light"
+  },
+  {
+    "id": 1,
+    "description": "Basement light",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 1,
+    "status": 0,
+    "type": "light",
+    "format": "xml",
+    "tagType": "light"
+  },
+  {
+    "id": 2,
+    "description": "Side outdoor light",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 2,
+    "status": 1,
+    "type": "light",
+    "format": "json",
+    "tagType": "light"
+  },
+  {
+    "id": 3,
+    "description": "Back outdoor light",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 3,
+    "status": 1,
+    "type": "light",
+    "format": "json",
+    "tagType": "light"
+  },
+  {
+    "id": 4,
+    "description": "Front outdoor light",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 4,
+    "status": 1,
+    "type": "light",
+    "format": "json",
+    "tagType": "light"
+  },
+  {
+    "id": 5,
+    "description": "Garage light",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 5,
+    "status": 1,
+    "type": "light",
+    "format": "json",
+    "tagType": "light"
+  },
+
+  {
+    "id": 6,
+    "description": "Front door lock",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 0,
+    "status": 0,
+    "type": "lock",
+    "format": "xml",
+    "tagType": "door"
+  },
+  {
+    "id": 7,
+    "description": "Garage door lock",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 1,
+    "status": 0,
+    "type": "lock",
+    "format": "xml",
+    "tagType": "door"
+  },
+  {
+    "id": 8,
+    "description": "Basement door lock",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 2,
+    "status": 1,
+    "type": "lock",
+    "format": "json",
+    "tagType": "door"
+  },
+  {
+    "id": 9,
+    "description": "Living room window lock",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 3,
+    "status": 1,
+    "type": "lock",
+    "format": "json",
+    "tagType": "door"
+  },
+  {
+    "id": 10,
+    "description": "Bedroom window lock",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 4,
+    "status": 1,
+    "type": "lock",
+    "format": "json",
+    "tagType": "door"
+  },
+  {
+    "id": 11,
+    "description": "Kitchen window lock",
+    "address": "10.7.10.201",
+    "port": "80",
+    "channel": 5,
+    "status": 1,
+    "type": "lock",
+    "format": "json",
+    "tagType": "door"
+  },
+  {
+    "id": 12,
+    "description": "Inside Temperature",
+    "address": "10.7.10.202",
+    "port": "80",
+    "channel": 4,
+    "status": 1,
+    "type": "sensor",
+    "format": "json",
+    "tagType": "temperature"
+  }
+
+
+]
